@@ -1,0 +1,14 @@
+# 在你租的云服务器上运行frps，参考这个配置
+
+bindAddr = "0.0.0.0"  # 监听任何IP的访问请求
+bindPort = [监听端口]
+
+# AuthServerConfig字段（！！！非常重要，不然任何人都能用你的服务器中转了）
+auth.method = "token"
+auth.token = "[你云服务器上的frps设置的token]"
+
+# WebServerConfig字段，提供一个简单的webUI显示frpc的运行状态和一些数据
+webServer.addr = "0.0.0.0"  # 表示任何IP都能访问
+webServer.port = [选择一个本地的端口号作为webUI的端口]
+webServer.user = "admin"  # 用来登录webUI的用户
+webServer.password = "[设置一个用户密码]"
