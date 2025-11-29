@@ -1,0 +1,17 @@
+# 在你手上的那台机器，用来控制的机器，参考这个配置
+
+serverAddr = "[你租的云服务器IP]"
+serverPort = [你租的云服务器上运行的frps程序，它监听的端口]
+
+# AuthServerConfig字段（！！！非常重要，不然任何人都能用你的服务器中转了）
+auth.method = "token"
+auth.token = "[你云服务器上的frps设置的token]"
+
+# 针对每个被控机，在控制机上都要设置一个[[visitors]]字段
+[[visitors]]
+name = "windows_rdp"
+type = "stcp"
+serverName = "[给被控的这台机器设置一个名字]"
+secretKey = "[访问密码，和被控机上设成相同的]"
+bindAddr = "127.0.0.1"  # 在本地打开RDP访问127.0.0.1:6000就能远控了
+bindPort = 6000
