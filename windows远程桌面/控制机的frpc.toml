@@ -9,9 +9,9 @@ auth.token = "[你云服务器上的frps设置的token]"
 
 # 针对每个被控机，在控制机上都要设置一个[[visitors]]字段
 [[visitors]]
-name = "windows_rdp"
+name = "visitor_windows_rdp"
 type = "stcp"
-serverName = "[给被控的这台机器设置一个名字]"
+serverName = "windows_rdp"  # 对应被控机的name字段
 secretKey = "[访问密码，和被控机上设成相同的]"
 bindAddr = "127.0.0.1"  # 在本地打开RDP访问127.0.0.1:6000就能远控了
 bindPort = 6000
