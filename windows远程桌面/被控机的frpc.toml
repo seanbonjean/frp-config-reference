@@ -1,0 +1,16 @@
+# 不在你手上的那台机器，被控制的机器，参考这个配置
+
+serverAddr = "[你租的云服务器IP]"
+serverPort = [你租的云服务器上运行的frps程序，它监听的端口]
+
+# AuthServerConfig字段（！！！非常重要，不然任何人都能用你的服务器中转了）
+auth.method = "token"
+auth.token = "[你云服务器上的frps设置的token]"
+
+[[proxies]]
+name = "windows_rdp"  # 这里的名字对应控制机的serverName字段
+type = "stcp"  # stcp模式下，服务不会暴露给其他人，但是访问服务的设备也需要运行frpc
+secretKey = "[访问密码，和被控机上设成相同的]"
+localIP = "127.0.0.1"
+localPort = 3389  # RDP默认端口
+# remotePort = 6000  # stcp模式下没有remotePort字段，需要删去
