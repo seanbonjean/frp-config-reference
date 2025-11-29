@@ -1,0 +1,29 @@
+# 在你家的内网homelab上运行frpc，参考这个配置
+
+serverAddr = "[你租的云服务器IP]"
+serverPort = [你租的云服务器上运行的frps程序，它监听的端口]
+
+# AuthServerConfig字段（！！！非常重要，不然任何人都能用你的服务器中转了）
+auth.method = "token"
+auth.token = "[你云服务器上的frps设置的token]"
+
+# WebServerConfig字段，提供一个简单的webUI显示frpc的运行状态和一些数据
+webServer.addr = "0.0.0.0"  # 表示任何IP都能访问
+webServer.port = [选择一个本地的端口号作为webUI的端口]
+webServer.user = "admin"  # 用来登录webUI的用户
+webServer.password = "[设置一个用户密码]"
+webServer.pprofEnable = false  # 不启动 Go HTTP pprof，这个东西用于应用调试，我们不用
+
+# homelab上每个需要暴露的服务都写一个这样的[[proxies]]字段
+[[proxies]]
+name = "ssh"
+type = "tcp"  # 这个模式下，只需homelab和租的云服务器需要运行frpc和frps，用来访问服务的设备（比如你的手机）不需要运行frp
+# 但同时只要有人扫描你的云服务器端口扫到了对应端口，并且云服务器防火墙把这个端口开放给了"0.0.0.0"，那他就能访问你的服务，你需要保证你homelab上的这个服务没有漏洞（勤更新）且这个服务的webUI设置了强密码
+localIP = "127.0.0.1"  # 因为服务也运行在同一台机器上（本机），所以用本地回环地址；如果你家有两台内网服务器，一台跑服务一台跑frpc，那这里才写对应那台跑服务的局域网地址
+localPort = [填你的服务开放到的端口]  # 这个是你部署服务（如qbittorrent、jellyfin、openlist、navidrome等等）时设置的端口，从那里去找
+transport.useEncryption = true  # 传输数据时加密链路
+remotePort = [填你希望从云服务器的哪个端口访问这个服务]
+
+[[proxies]]
+# 每个服务都要一个[[proxies]]字段
+# 以下省略xxxxxx...
