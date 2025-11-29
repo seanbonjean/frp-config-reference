@@ -1,0 +1,1 @@
+云服务器的frps不需要特别配置，参考“homelab暴露到公网”中的frps.toml即可
